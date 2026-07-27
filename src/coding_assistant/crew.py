@@ -1,7 +1,10 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task,LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 @CrewBase
 class CodingAssistant():
@@ -10,31 +13,23 @@ class CodingAssistant():
     agents: list[BaseAgent]
     tasks: list[Task]
 
-    @agent
-    def researcher(self) -> Agent:
-        return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
-        )
+    llm_openrouter=LLM(
+        model="openrouter/cohere/north-mini-code:free",
+        api_key= os.getenv("OPENROUTER_API_KEY")
+    )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def coder(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
+            config=self.agents_config['coder'], # type: ignore[index]
+            llm=self.llm_openrouter ,
             verbose=True
         )
 
     @task
-    def research_task(self) -> Task:
+    def coding_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
-        )
-
-    @task
-    def reporting_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
+            config=self.tasks_config['coding_task'], # type: ignore[index]
         )
 
     @crew

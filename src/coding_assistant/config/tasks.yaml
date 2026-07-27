@@ -1,9 +1,9 @@
-programmer_task:
+coding_task:
   description: >
     Buatkan program atau app yang user inginkan yaitu: {topic}. 
-    Buatkan app dengan menggunakan bahasa pemrogramman yang user inginkan, tulis kode dengan rapih dan terdokumentasi
+    Buatkan {lang} app  dengan menggunakan bahasa pemrogramman yang user inginkan, tulis kode dengan rapih dan terdokumentasi
     agar alur logika nya mudah dipahami user
   expected_output: >
-   Aplikasi atau program dengan bahasa pemrogramman yang user inginkan.
+   Aplikasi atau program dengan bahasa pemrogramman {lang}.
   agent: coder
   
